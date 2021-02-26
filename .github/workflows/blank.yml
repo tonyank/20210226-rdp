@@ -16,7 +16,10 @@ jobs:
         run: Invoke-WebRequest https://downloads.rclone.org/v1.54.0/rclone-v1.54.0-windows-amd64.zip -OutFile rclone-v1.54.0-windows-amd64.zip && Expand-Archive rclone-v1.54.0-windows-amd64.zip && echo '${{ secrets.RCLONE.CONF }}' > rclone.conf
 
       - name: 部署 ngrok
-        run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok-stable-windows-amd64.zip && Expand-Archive ngrok-stable-windows-amd64.zip && .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
+        run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok-stable-windows-amd64.zip && Expand-Archive ngrok-stable-windows-amd64.zip
+
+      - name: Auth
+        run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
         env:
           NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
 
